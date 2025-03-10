@@ -1,0 +1,55 @@
+#include<stdio.h>
+int main(){
+int i ,n,key,found=0;
+printf("Enter the size of array: ");
+scanf("%d",&n);
+int a[n],choice,low=0,high=n-1;
+printf("\nEnter %d array elements: ",n);
+for(i=1;i<=n;i++){
+scanf("%d",&a[i]);
+  }
+  printf("\nEnter the element you want to search: \n");
+  scanf("%d",&key);
+  printf("\nEnter the choice\n");
+  printf("1.Linear Search\n2.Binary Search\n");
+  scanf("%d",&choice);
+  switch (choice){
+  case 1:
+  for(i=0;i<n;i++){
+    if(key == a[i]){
+      found=1;
+      break;
+      }
+      }
+      if(found==1){
+       printf("\nThe element is present at %d position",i);
+       }
+    else{
+      printf("\nThe element is not present in array\n");
+      }
+      break;
+
+   case 2:
+   while(low<=high){
+    int mid=(high+low)/2;
+   if(key==a[mid]){
+   printf("\nElement found");
+   return 0;
+   }
+   else if(key<mid){
+   high=mid-1;
+   }
+   else{
+   low=mid+1;
+   }
+   }
+   if (low>high){
+   printf("\nElement not found");
+   }
+   break;
+   
+   default:
+   printf("\nInvalid Choice");
+  }
+  return 0;
+}
