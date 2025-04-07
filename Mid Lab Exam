@@ -1,0 +1,40 @@
+#include<stdio.h>
+#include<stdbool.h>
+
+int main()
+{
+    int n,i,key,count=0,found;
+    printf("Enter the number of items : ");
+    scanf("%d",&n);
+    int a[n];
+    printf("Enter the %d items code : ",n);
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&a[i]);     //accept items
+    }
+    printf("Enter the item code to be search : ");   //key
+    scanf("%d",&key);
+    for(i=0;i<n;i++)
+    {
+        printf("Pass %d:",i+1);      //passes
+        for(int k=0;k<n;k++)
+        {
+            printf("\t%d\t",a[k]);
+            printf("\n");
+        }
+        if(a[i]==key)          //check element is present or not
+        {
+            found=1;           //flag variable
+            count++;           //counter variable
+        }
+    }
+    if(found==1)
+    {
+        printf("\nItem is available in the inventory and Quantity is : %d",count); //element is present and it's quantity
+    }
+    else
+    {
+        printf("Item is out of stock");
+    }
+    return 0;
+}
