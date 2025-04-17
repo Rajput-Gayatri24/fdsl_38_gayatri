@@ -1,0 +1,72 @@
+#include <stdio.h>
+
+#define SIZE 5
+
+int queue[SIZE], front = -1, rear = -1;
+
+void enqueue(int element) {
+    if (rear == -1 && front == -1) {
+        rear = 0;
+        front = 0;
+        queue[front] = element;
+    } else if ((rear + 1) % SIZE == front) {
+        printf("Queue Is Full\n");
+    } else {
+        rear = (rear + 1) % SIZE;
+        queue[rear] = element;
+    }
+}
+
+void dequeue() {
+    if (front == -1 && rear == -1) {
+        printf("Queue Is Empty\n");
+    } else if (rear == front) {
+        printf("Element deleted is %d\n", queue[front]);
+        rear = -1;
+        front = -1;
+    } else {
+        printf("Element deleted is %d\n", queue[front]);
+        front = (front + 1) % SIZE;
+    }
+}
+
+void display_by_pos() {
+    if (front == -1 && rear == -1) {
+        printf("Queue Is Empty\n");
+    } else {
+        printf("Queue Elements:\n");
+        for (int i = 0; i < SIZE; i++) {
+            printf("%d\t", queue[i]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int choice, value;
+
+    while (1) {
+        printf("\nOperations On Queue\n");
+        printf("1. Enqueue\n2. Dequeue\n3. Display\n4. Exit\n");
+        printf("Enter your choice = ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter value to enqueue: ");
+                scanf("%d", &value);
+                enqueue(value);
+                break;
+            case 2:
+                dequeue();
+                break;
+            case 3:
+                display_by_pos();
+                break;
+            case 4:
+                return 0;
+            default:
+                printf("Invalid Choice\n");
+        }
+    }
+}
