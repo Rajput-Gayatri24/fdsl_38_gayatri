@@ -1,0 +1,112 @@
+#include <stdio.h>
+#include <string.h>
+
+#define SIZE 5
+#define MAX_NAME 100
+
+typedef struct {
+    char name[MAX_NAME];
+    char artist[MAX_NAME];
+    int trackID;
+} Song;
+
+Song playlist[SIZE];
+int front = -1, rear = -1;
+
+int isFull() {
+    return (front == (rear + 1) % SIZE);
+}
+
+int isEmpty() {
+    return (front == -1);
+}
+
+void addSong(char *name, char *artist, int trackID) {
+    if (isFull()) {
+        printf("Playlist is full\n");
+        return;
+    }
+
+    if (isEmpty()) {
+        front = rear = 0;
+    } else {
+        rear = (rear + 1) % SIZE;
+    }
+
+    strcpy(playlist[rear].name, name);
+    strcpy(playlist[rear].artist, artist);
+    playlist[rear].trackID = trackID;
+    printf("Added: %s by %s (ID: %d)\n", name, artist, trackID);
+}
+
+void playSong() {
+    if (isEmpty()) {
+        printf("Playlist is empty\n");
+        return;
+    }
+
+    printf("Playing: %s by %s (ID: %d)\n", playlist[front].name, playlist[front].artist, playlist[front].trackID);
+    if (front == rear) {
+        front = rear = -1;
+    } else {
+        front = (front + 1) % SIZE;
+    }
+}
+
+void showPlaylist() {
+    if (isEmpty()) {
+        printf("Playlist is empty\n");
+        return;
+    }
+
+    printf("Current Playlist:\n");
+    int i = front;
+    while (1) {
+        printf("%s by %s (ID: %d)\n", playlist[i].name, playlist[i].artist, playlist[i].trackID);
+        if (i == rear) break;
+        i = (i + 1) % SIZE;
+    }
+}
+
+int main() {
+    int choice;
+    char name[MAX_NAME], artist[MAX_NAME];
+    int trackID;
+
+    while (1) {
+        printf("\n--Music Playlist Menu--\n");
+        printf("1. Add Song\n");
+        printf("2. Play Song\n");
+        printf("3. Show Playlist\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        getchar();
+
+        switch (choice) {
+            case 1:
+                printf("Enter song name: ");
+                fgets(name, MAX_NAME, stdin);
+                name[strcspn(name, "\n")] = 0;
+                printf("Enter artist name: ");
+                fgets(artist, MAX_NAME, stdin);
+                artist[strcspn(artist, "\n")] = 0;
+                printf("Enter track ID: ");
+                scanf("%d", &trackID);
+                getchar();
+                addSong(name, artist, trackID);
+                break;
+            case 2:
+                playSong();
+                break;
+            case 3:
+                showPlaylist();
+                break;
+            case 4:
+                printf("Exiting.\n");
+                return 0;
+            default:
+                printf("Invalid choice\n");
+        }
+    }
+}
