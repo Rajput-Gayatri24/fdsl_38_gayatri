@@ -1,0 +1,114 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node *next;
+};
+
+struct node *head = NULL;
+struct node *temp, *newnode, *prevnode;
+
+void insertAtFirst() {
+    newnode = (struct node *)malloc(sizeof(struct node));
+    printf("Enter data for new node: \n");
+    scanf("%d", &newnode->data);
+
+    if (head == NULL) {
+        head = newnode;
+        newnode->next = NULL;
+    } else {
+        newnode->next = head;
+        head = newnode;
+    }
+}
+
+void insertAtLast() {
+    newnode = (struct node *)malloc(sizeof(struct node));
+    printf("Enter data for new node: \n");
+    scanf("%d", &newnode->data);
+    newnode->next = NULL;
+
+    if (head == NULL) {
+        head = newnode;
+    } else {
+        temp = head;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = newnode;
+    }
+}
+
+void deleteFirst() {
+    if (head == NULL) {
+        printf("The list is empty.\n");
+    } else {
+        temp = head;
+        head = head->next;
+        temp->next = NULL;
+        free(temp);
+    }
+}
+
+void deleteLast() {
+    if (head == NULL) {
+        printf("The list is empty.\n");
+    } else if (head->next == NULL) {
+        free(head);
+        head = NULL;
+    } else {
+        temp = head;
+        while (temp->next != NULL) {
+            prevnode = temp;
+            temp = temp->next;
+        }
+        prevnode->next = NULL;
+        free(temp);
+    }
+}
+
+void display() {
+    if (head == NULL) {
+        printf("The list is empty.\n");
+    } else {
+        temp = head;
+        printf("Linked List: ");
+        while (temp != NULL) {
+            printf("%d ", temp->data);
+            temp = temp->next;
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int ch;
+    while (1) {
+        printf("\nEnter your choice:\n 1. Insert at first\n 2. Insert at last\n 3. Delete first\n 4. Delete last\n 5. Display\n 6. Exit\n");
+        scanf("%d", &ch);
+
+        switch (ch) {
+            case 1:
+                insertAtFirst();
+                break;
+            case 2:
+                insertAtLast();
+                break;
+            case 3:
+                deleteFirst();
+                break;
+            case 4:
+                deleteLast();
+                break;
+            case 5:
+                display();
+                break;
+            case 6:
+                return 0;
+            default:
+                printf("\nInvalid choice!\n");
+        }
+    }
+    return 0;
+}
