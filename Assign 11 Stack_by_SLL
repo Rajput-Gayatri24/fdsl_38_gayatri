@@ -1,0 +1,66 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+ int data;
+ struct node *next;
+ };
+ struct node *top = NULL;
+ struct node *temp,*newnode,*top,*prevnode;
+ void push() {
+    struct node *newNode = malloc(sizeof(struct node));
+    printf("Enter data for new node: \n");
+    scanf("%d", &newNode->data);
+    
+    if (top == NULL) {
+        top = newNode;
+        newNode->next = NULL;
+    } else {
+        newNode->next = top;
+        top = newNode;
+    }
+}
+void pop() {
+    if (top == NULL) {
+        printf("The list is empty.\n");
+    } else {
+        temp = top;
+        top = top->next;
+        temp->next = NULL;
+        free(temp);
+    }
+}void display() {
+    temp=top;
+    printf("Linked List : ");
+    while (temp != NULL) {
+        printf("%d\t", temp->data);
+        temp = temp->next;
+    }
+   }
+   int main(){
+     int ch;
+     top=NULL;
+     struct node *newNode = malloc(sizeof(struct node));
+     while (ch!=0) {
+        printf("\nEnter your choice:\n 1. Push\n 2. Pop\n 3. Display\n 4. Exit\n");
+        scanf("%d", &ch);
+     
+     switch(ch){
+     case 1: 
+            push();
+            break;
+     case 2: 
+            pop();
+            break;
+     case 3: 
+            display();
+            break;
+     case 4:
+            return 0;
+            break;
+     default:
+            printf("\nInvalid choice!\n");
+     }
+    }
+return 0;
+}
