@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node* next;
+};
+
+struct node* front = NULL;
+struct node* rear = NULL;
+
+void enQueue() {
+    struct node* newNode = malloc(sizeof(struct node));
+    printf("Enter data for new node: \n");
+    scanf("%d", &newNode->data);
+    newNode->next = NULL;
+
+    if (rear == NULL) {
+        front = rear = newNode;
+    } else {
+        rear->next = newNode;
+        rear = newNode;
+    }
+    printf("Enqueued: %d\n", newNode->data);
+}
+
+void deQueue() {
+    if (front == NULL) {
+        printf("The list is empty.\n");
+    } else {
+        struct node* temp = front;
+        front = front->next;
+
+        if (front == NULL) {
+            rear = NULL;
+        }
+
+        printf("Dequeued: %d\n", temp->data);
+        free(temp);
+    }
+}
+
+void display() {
+    if (front == NULL) {
+        printf("The list is empty.\n");
+    } else {
+        struct node* temp = front;
+        printf("Linked List : ");
+        while (temp != NULL) {
+            printf("%d ", temp->data);
+            temp = temp->next;
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int ch;
+
+    while (1) {
+        printf("\nEnter your choice:\n 1. Enqueue\n 2. Dequeue\n 3. Display\n 4. Exit\n");
+        scanf("%d", &ch);
+
+        switch(ch) {
+            case 1:
+                enQueue();
+                break;
+            case 2:
+                deQueue();
+                break;
+            case 3:
+                display();
+                break;
+            case 4:
+                printf("Exiting program.\n");
+                return 0;
+            default:
+                printf("\nInvalid choice!\n");
+        }
+    }
+
+    return 0;
+}
